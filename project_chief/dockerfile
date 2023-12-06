@@ -1,0 +1,71 @@
+# FROM python:3.11-slim
+
+# EXPOSE 8091
+
+# WORKDIR /app
+
+# ENV PYTHONUNBUFFERED 1
+
+# COPY requirements.txt /app
+
+# RUN pip install --upgrade pip && \
+#     pip install -r requirements.txt
+
+# COPY . /app
+
+
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8091"]
+# Utiliser une image officielle de Python comme base
+# FROM python:3.11-slim
+
+# # Créer et définir le répertoire de travail
+# WORKDIR /app
+
+# # Copier le fichier requirements.txt dans le conteneur à /app/
+# COPY requirements.txt /app/
+
+# # Installer les dépendances
+# RUN pip install -r requirements.txt
+
+# # Copier tout le reste dans le conteneur à /app/
+# COPY . /app
+
+# # Copier le fichier de configuration Gunicorn
+# COPY gunicorn.conf.py /app/gunicorn.conf.py
+
+# # Exposer le port 8000 pour Gunicorn
+# EXPOSE 8000
+
+# # Utiliser Gunicorn au lieu de runserver avec la configuration
+# CMD ["gunicorn", "-c", "gunicorn.conf.py", "project_chief.wsgi:application"]
+
+FROM python:3.9-slim
+
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+
+# Set the working directory
+WORKDIR /app
+
+
+# install dependencies
+COPY ./requirements.txt /app
+
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+
+# copy project
+COPY . /app
+
+
+# Make port 8000 available to the world outside this container
+EXPOSE 8000
+
+
+# Run app.py when the container launches
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app4prod.wsgi:application"]
