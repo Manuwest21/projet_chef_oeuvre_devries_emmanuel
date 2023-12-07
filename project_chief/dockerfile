@@ -62,6 +62,8 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
+# RUN python manage.py collectstatic --noinput
+#no input= n'attends ma confirmation, juste fais
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
