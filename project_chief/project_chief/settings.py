@@ -98,7 +98,28 @@ WSGI_APPLICATION = 'project_chief.wsgi.application'
 #         "HOST": "127.0.0.1",
 #         "PORT": "5432",
 #     }
-
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'github-actions',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '5432'
+        }
+    }
+else:
+    DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("PGDATABASE"),
+        "USER": os.getenv("PGUSER"),
+        "PASSWORD": os.getenv("PGPASSWORD"),
+        "HOST": os.getenv("PGHOST"),
+        "PORT": os.getenv("PGPORT"),
+    },
+}
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -163,4 +184,4 @@ STATIC_DIRS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ["https://django-on-azure-app-beniac.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ["https://appmanuok2.azurewebsites.net"]
